@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile Manager</title>
+<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="registerProject.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="registerProject.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+<body>
+
+<div id="nav_bar" class="nonselectable">
+  <i class="fa fa-cog fa-spin"></i>
+  <a>Profile Manager</a>
+</div>
+
+<div id="form_area" class="nonselectable">
+  <div id = "register_form">
+    <!-- <h1>Company Profile</h1><br> -->
+    <i class="fa fa-user fa-1x"></i>
+    <a>Employee Name: </a></br> <input type="text" name="employee_name"
+                                  value="enter your name"><br><br>
+    <i class="fa fa-suitcase fa-1x"></i>
+    <a>Project Name: </a></br> <input type="text" name="project_name"
+                                  value="enter the project name"><br><br>
+    <i class="fa fa-align-justify fa-1x"></i>
+    <a>Project Description: </a></br> <input type="text" name="project_desc"
+                                    value="describe the project"><br>
+
+    <br><br>
+    <i class="fa fa-upload fa-1x"></i>
+    <a>Upload Images:</a>
+    <table class="upload_img">
+      <tr>
+        <td>
+          <br>
+          <a>Idle Image: </a>
+        </td>
+        <td>
+          <br>
+          <a>Start Image: </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="file" name="wait_img">
+        </td>
+        <td>
+          <input type="file" name="start_img">
+        </td>
+      </tr>
+    </table>
+
+    <br><br>
+    <i class="fa fa-comment fa-1x"></i>
+    <a>Greetings:</a>
+    <div class="section">
+      <a>Greeting: </a></br> <textarea name="start_greeting">Hello, Human!...</textarea><br><br>
+      <a>Parting Phrase: </a></br> <textarea name="end_greeting">Goodbye, Human!...</textarea><br>
+    </div>
+  </div>
+  <br><br>
+
+  <i class="fa fa-eye fa-1x"></i>
+  <a>Display:</a><br>
+
+  <div id="canvas" class="ui-widget-header">
+    <!-- <i class="fa fa-picture-o fa-5x"></i> -->
+      <img id="bg_img" src="default_bg.png" alt="" />
+
+      <!--This is where the draggable buttons go-->
+
+      <!-- End of draggable buttons -->
+  </div>
+  <!-- <textarea name="end_greeting">DISPLAY IS NOT YET AVAILABLE! :D</textarea><br> -->
+
+  <i class="fa fa-picture-o fa-1x"></i>
+  <a>Background Image:</a>
+  <div id="upload_bg">
+    <input onchange="changeBgImage(this);" id="bg_img" type="file" name="bg_img">
+  </div>
+
+  <br><hr>
+  <div class="header_category">
+    <i class="fa fa-wrench"></i>
+    <a>Services </a>
+    <a id="totalFormHtml"></a>
+    <div class="options">
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <a class="enabled service_option nonselectable" id="add_service">Add Service</a>
+          </td>
+          <td>
+            <a class="enabled service_option nonselectable" id="remove_all_service">Remove All</a>
+          </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="service_form">
+      <!-- This is where all service forms go -->
+  </div>
+
+  <div id="service_counter">-Empty-</div>
+
+  <hr>
+
+</div>
+</body>
+</html>
