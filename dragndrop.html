@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Canvas Drop and Drag Test</title>
+<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+</head>
+<body onload = "init();">
+<section>
+<div>
+<canvas id="canvas" width="1400" height="500">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+</div>
+<script type="text/javascript">
+
+var canvas;
+var ctx;
+var x = 75;
+var y = 50;
+var WIDTH = 1400;
+var HEIGHT = 500;
+var dragok = false;
+
+function clear() {
+ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function init() {
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext('2d');
+return setInterval(draw, 10);
+}
+
+function draw() {
+clear();
+ctx.fillStyle = "#FAF7F8";
+rect(0,0,WIDTH,HEIGHT);
+ctx.fillStyle = "#444444";
+rect(x - 15, y - 15, 30, 30);
+}
+
+function rect(x,y,w,h) {
+ctx.beginPath();
+ctx.rect(x,y,w,h);
+ctx.closePath();
+ctx.fill();
+}
+
+$("canvas").mousedown(function myDown(e){
+var position = $("canvas").position();
+if (e.clientX < x + 15 + position.left && e.clientX > x - 15 +
+position.left && e.clientY < y + 15 + position.top &&
+e.clientY > y -15 + position.top){
+x = e.clientX;
+y = e.clientY;
+dragok = true;
+$("canvas").mousemove(function myMove(e){
+if (dragok){
+x = e.clientX - position.left;
+y = e.clientY - position.top;
+}
+});
+}
+});
+
+$("canvas").mouseup(function myUp(e){
+dragok = false;
+$("canvas").mousemove(null);
+});
+
+</script>
+</section>
+
+</body>
+
+</html>

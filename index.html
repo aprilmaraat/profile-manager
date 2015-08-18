@@ -6,8 +6,11 @@
 <link rel="stylesheet" type="text/css" href="registerProject.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="registerProject.js"></script>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="canvas_display.js"></script>
+
 </head>
 <body>
 
@@ -66,14 +69,17 @@
   <i class="fa fa-eye fa-1x"></i>
   <a>Display:</a><br>
 
-  <div id="canvas" class="ui-widget-header">
+  <iframe id="canvas" src="canvas_display.html">
+    <!-- <pre id="canvas"> -->
     <!-- <i class="fa fa-picture-o fa-5x"></i> -->
       <img id="bg_img" src="default_bg.png" alt="" />
 
       <!--This is where the draggable buttons go-->
-      <a>TEST PUSH</a>
+      <div id="draggable" class="draggable ui-widget-content"></div>
+      <div id="draggable1" class="draggable ui-widget-content"></div>
       <!-- End of draggable buttons -->
-  </div>
+    <!-- </pre> -->
+  </iframe>
   <!-- <textarea name="end_greeting">DISPLAY IS NOT YET AVAILABLE! :D</textarea><br> -->
 
   <i class="fa fa-picture-o fa-1x"></i>
