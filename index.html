@@ -23,14 +23,14 @@
   <div id = "register_form">
     <!-- <h1>Company Profile</h1><br> -->
     <i class="fa fa-user fa-1x"></i>
-    <a>Employee Name: </a></br> <input type="text" name="employee_name"
-                                  value="enter your name"><br><br>
+    <a>Employee Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"
+                                  placeholder="enter your name"><br><br>
     <i class="fa fa-suitcase fa-1x"></i>
-    <a>Project Name: </a></br> <input type="text" name="project_name"
-                                  value="enter the project name"><br><br>
+    <a>Project Name: </a></br> <input onclick="this.select();" type="text" name="project_name"
+                                  placeholder="enter the project name"><br><br>
     <i class="fa fa-align-justify fa-1x"></i>
-    <a>Project Description: </a></br> <input type="text" name="project_desc"
-                                    value="describe the project"><br>
+    <a>Project Description: </a></br> <input onclick="this.select();" type="text" name="project_desc"
+                                    placeholder="describe the project"><br>
 
     <br><br>
     <i class="fa fa-upload fa-1x"></i>
@@ -60,36 +60,56 @@
     <i class="fa fa-comment fa-1x"></i>
     <a>Greetings:</a>
     <div class="section">
-      <a>Greeting: </a></br> <textarea name="start_greeting">Hello, Human!...</textarea><br><br>
-      <a>Parting Phrase: </a></br> <textarea name="end_greeting">Goodbye, Human!...</textarea><br>
+      <a>Greeting: </a></br> <textarea onclick="this.select();" name="start_greeting">Hello, Human!...</textarea><br><br>
+      <a>Parting Phrase: </a></br> <textarea onclick="this.select();" name="end_greeting">Goodbye, Human!...</textarea><br>
     </div>
   </div>
   <br><br>
 
-  <i class="fa fa-eye fa-1x"></i>
-  <a>Display:</a><br>
+  <div class="header_category">
+    <i class="fa fa-eye fa-1x"></i>
+    <a>Display:</a><br>
 
-  <iframe id="canvas" src="canvas_display.html">
-    <!-- <pre id="canvas"> -->
-    <!-- <i class="fa fa-picture-o fa-5x"></i> -->
-      <img id="bg_img" src="default_bg.png" alt="" />
+    <table id="toolSet">
+      <tr>
+        <td>
+          <a id="toolTip">Zoom-In</a>
+        </td>
+        <td>
+          <i id="zoomInButton" class="fa fa-search-plus zoomTool"></i>
+        </td>
+        <td>
+          <i id="zoomOutButton" class="fa fa-search-minus zoomTool"></i>
+        </td>
+        <td>
+          <i id="normalZoomButton" class="fa fa-refresh zoomTool"></i>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-      <!--This is where the draggable buttons go-->
-      <div id="draggable" class="draggable ui-widget-content"></div>
-      <div id="draggable1" class="draggable ui-widget-content"></div>
-      <!-- End of draggable buttons -->
-    <!-- </pre> -->
-  </iframe>
-  <!-- <textarea name="end_greeting">DISPLAY IS NOT YET AVAILABLE! :D</textarea><br> -->
+  <div id="canvas_container">
+    <canvas id="canvas" width="500" height="374">
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+  </div>
+
+  <script>
+  var c = document.getElementById("canvas");
+  var ctx = c.getContext("2d");
+  ctx.fillStyle = "#3399FF";
+  ctx.fillRect(1,1,200,100);
+
+  </script>
 
   <i class="fa fa-picture-o fa-1x"></i>
   <a>Background Image:</a>
   <div id="upload_bg">
-    <input onchange="changeBgImage(this);" id="bg_img" type="file" name="bg_img">
+    <input onchange="canvasImage(this);" id="bg_img" type="file" name="bg_img">
   </div>
 
   <br><hr>
-  <div class="header_category">
+  <div id="sticky_serivce_category" class="header_category">
     <i class="fa fa-wrench"></i>
     <a>Services </a>
     <a id="totalFormHtml"></a>

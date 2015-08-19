@@ -1,6 +1,7 @@
 var totalForm = 0;
 var maxForm = 20;
 var isFull = false;
+var currentZoom = 1.0;
 // var index = 1;
 
 $(document).ready(function() {
@@ -31,8 +32,7 @@ $(document).ready(function() {
 
   //STICKY
     var win = $(window),
-    nav = $('.header_category'),
-
+    nav = $('#sticky_serivce_category'),
     pos = nav.offset().top,
     sticky = function(){
       win.scrollTop() > pos ?
@@ -40,19 +40,86 @@ $(document).ready(function() {
       : nav.removeClass('sticky')
     }
 
-    win.scroll(sticky)
+    win.scroll(sticky);
 
-      $( "#draggable" ).draggable({ snap: true });
-      $( "#draggable2" ).draggable({ snap: true });
+    //ZOOM IN
+    $("#zoomInButton").click(
+      function(){
+        $('#canvas').animate({'zoom':currentZoom += .3},'slow');
+      });
+    //ZOOM OUT
+    $("#zoomOutButton").click(
+      function(){
+        $('#canvas').animate({'zoom':currentZoom -= .3},'slow');
+      });
+    //NORMAL ZOOM
+    $("#normalZoomButton").click(
+      function(){
+        currentZoom = 1.0;
+        $('#canvas').animate({'zoom': 1 },'slow');
+      });
+
+    //HOVER TOOLTIP
+
+    //Hover zoom in & text change
+    $("#zoomInButton").hover(
+      function(){
+          document.getElementById("toolTip").innerHTML = "Zoom-In";
+          $('#toolTip').css({'opacity': 1 },'slow');
+          $('#zoomInButton').css({'color': "#FF6666" },'slow');
+          $('#zoomOutButton').css({'color': "lightgray" },'slow');
+          $('#normalZoomButton').css({'color': "lightgray" },'slow');
+      },
+      function(){
+          $('#toolTip').css({'opacity': 0 },'slow');
+          $('#zoomInButton').css({'color': "#3399FF" },'slow');
+          $('#zoomOutButton').css({'color': "#3399FF" },'slow');
+          $('#normalZoomButton').css({'color': "#3399FF" },'slow');
+      }
+    );
+
+    //Hover zoom out & text change
+    $("#zoomOutButton").hover(
+      function(){
+          document.getElementById("toolTip").innerHTML = "Zoom-Out";
+          $('#toolTip').css({'opacity': 1 },'slow');
+          $('#zoomInButton').css({'color': "lightgray" },'slow');
+          $('#zoomOutButton').css({'color': "#FF6666" },'slow');
+          $('#normalZoomButton').css({'color': "lightgray" },'slow');
+      },
+      function(){
+          $('#toolTip').css({'opacity': 0 },'slow');
+          $('#zoomInButton').css({'color': "#3399FF" },'slow');
+          $('#zoomOutButton').css({'color': "#3399FF" },'slow');
+          $('#normalZoomButton').css({'color': "#3399FF" },'slow');
+      }
+    );
+
+    //Hover normal zoom & text change
+    $("#normalZoomButton").hover(
+      function(){
+          document.getElementById("toolTip").innerHTML = "Default View";
+          $('#toolTip').css({'opacity': 1 },'slow');
+          $('#zoomInButton').css({'color': "lightgray" },'slow');
+          $('#zoomOutButton').css({'color': "lightgray" },'slow');
+          $('#normalZoomButton').css({'color': "#FF6666" },'slow');
+      },
+      function(){
+          $('#toolTip').css({'opacity': 0 },'slow');
+          $('#zoomInButton').css({'color': "#3399FF" },'slow');
+          $('#zoomOutButton').css({'color': "#3399FF" },'slow');
+          $('#normalZoomButton').css({'color': "#3399FF" },'slow');
+      }
+    );
 });
 
 function init(index){
   $(".service_form").append('    <div id="'+index+'" class="template">'+
         '<i class="fa fa-star fa-1x"></i>'+
-        '<a>Service Name: </a></br> <input type="text" name="employee_name"'+
-                                      'value="What service do you provide?"><br><br>'+
+        '<a>Service Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"'+
+                                      'placeholder="What service do you provide?"><br><br>'+
         '<i class="fa fa-sort-desc fa-1x"></i>'+
-        '<a>Service Description: </a></br> <textarea name="start_greeting">Describe the service, please...</textarea><br><br>'+
+        '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
 
         '<table class="template_elem">'+
           '<tr>'+
@@ -68,11 +135,11 @@ function init(index){
           '<tr>'+
             '<td>'+
               '<a>Button Position-X: </a>'+
-              '<input class="small_textfield" type="size" name="start_img" value="0px">'+
+              '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
             '</td>'+
             '<td>'+
               '<a>Button Position-Y: </a>'+
-              '<input class="small_textfield" type="size" name="start_img" value="0px">'+
+              '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
             '</td>'+
           '</tr>'+
         '</table>'+
@@ -98,10 +165,10 @@ function appendForm(index){
   if(tempTotal <= maxForm){
     $(".service_form").append('    <div id="'+index+'" class="template">'+
           '<i class="fa fa-star fa-1x"></i>'+
-          '<a>Service Name: </a></br> <input type="text" name="employee_name"'+
-                                        'value="What service do you provide?"><br><br>'+
+          '<a>Service Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"'+
+                                        'placeholder="What service do you provide?"><br><br>'+
           '<i class="fa fa-sort-desc fa-1x"></i>'+
-          '<a>Service Description: </a></br> <textarea name="start_greeting">Describe the service, please...</textarea><br><br>'+
+          '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
 
           '<table class="template_elem">'+
             '<tr>'+
@@ -117,11 +184,11 @@ function appendForm(index){
             '<tr>'+
               '<td>'+
                 '<a>Button Position-X: </a>'+
-                '<input class="small_textfield" type="size" name="start_img" value="0px">'+
+                '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
               '</td>'+
               '<td>'+
                 '<a>Button Position-Y: </a>'+
-                '<input class="small_textfield" type="size" name="start_img" value="0px">'+
+                '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
               '</td>'+
             '</tr>'+
           '</table>'+
@@ -177,6 +244,34 @@ function changeBgImage(input){
 
       reader.readAsDataURL(input.files[0]);
   }
+}
+
+function canvasImage(input){
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  var imageObj = new Image();
+
+  // context.globalCompositeOperation='destination-over'; //DRAW BEHIND
+
+  imageObj.onload = function() {
+    context.drawImage(imageObj, 0, 0);
+  };
+
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('#canvas').css("background-repeat","no-repeat"); //No Repeat
+          $('#canvas').css("background-position","center");
+          // $('#canvas').css("background-size","100% 100%"); //FILL IMAGE
+          // $('#canvas').css("background-size","100%"); //FILL IMAGE
+          $('#canvas').css("background-image","url("+e.target.result +")");
+      };
+      reader.readAsDataURL(input.files[0]);
+  }
+
+  // imageObj.src = 'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg';
+  // imageObj.src = 'default_bg1.png';
 }
 
 function dragButtons() {
