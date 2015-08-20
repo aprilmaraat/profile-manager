@@ -111,6 +111,13 @@ $(document).ready(function() {
           $('#normalZoomButton').css({'color': "#3399FF" },'slow');
       }
     );
+
+    //Dragging
+    $(function() {
+        $( "#draggable" ).draggable({ snap: true });
+        $( "#draggable2" ).draggable({ snap: true });
+        $( "#draggable3" ).draggable({ snap: true });
+    });
 });
 
 function init(index){
@@ -235,12 +242,12 @@ function changeBgImage(input){
       var reader = new FileReader();
 
       reader.onload = function (e) {
-          $('#bg_img')
-              .attr('src', e.target.result)
-              // .width(850);
-              // .height(200);
+        $('#canvas').css("background-image","url("+e.target.result+")");
       };
-      document.getElementById("canvas").style.content = input.files[0];
+
+      // alert(input.files[0]);
+      // document.getElementById("canvas").style.content = input.files[0];
+      // document.getElementById("canvas").style.color = red;
 
       reader.readAsDataURL(input.files[0]);
   }
@@ -274,10 +281,6 @@ function canvasImage(input){
   // imageObj.src = 'default_bg1.png';
 }
 
-function dragButtons() {
-  $( "#draggable" ).draggable({ snap: true });
-  $( "#draggable2" ).draggable({ snap: ".ui-widget-header" });
-  $( "#draggable3" ).draggable({ snap: ".ui-widget-header", snapMode: "outer" });
-  $( "#draggable4" ).draggable({ grid: [ 20, 20 ] });
-  $( "#draggable5" ).draggable({ grid: [ 80, 80 ] });
+function disableCursor(){
+
 }

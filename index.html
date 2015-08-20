@@ -88,24 +88,29 @@
     </table>
   </div>
 
-  <div id="canvas_container">
-    <canvas id="canvas" width="500" height="374">
+  <div id="canvas_container"ue>
+    <!-- <canvas id="canvas" width="500" height="374">
       Your browser does not support the HTML5 canvas tag.
-    </canvas>
+    </canvas> -->
+    <div id="canvas">
+      <div id="draggable" class="buttons" style="top:0px; left:250px; background-color: #3399FF;">Web Development</div>
+      <div id="draggable2" class="buttons" style="top:100px; left:250px; background-color: #3399FF;">Music Production</div>
+      <div id="draggable3" class="buttons" style="top:200px; left:250px; background-color: #3399FF;">Animations</div>
+    </div>
   </div>
 
-  <script>
+  <!-- <script>
   var c = document.getElementById("canvas");
   var ctx = c.getContext("2d");
   ctx.fillStyle = "#3399FF";
   ctx.fillRect(1,1,200,100);
 
-  </script>
+  </script> -->
 
   <i class="fa fa-picture-o fa-1x"></i>
   <a>Background Image:</a>
   <div id="upload_bg">
-    <input onchange="canvasImage(this);" id="bg_img" type="file" name="bg_img">
+    <input onchange="changeBgImage(this);" id="bg_img" type="file" name="bg_img">
   </div>
 
   <br><hr>
