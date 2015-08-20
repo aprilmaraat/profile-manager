@@ -3,7 +3,7 @@ var maxForm = 20;
 var isFull = false;
 var currentZoom = 1.0;
 var currFontSize = 20;
-var initXYpos = 20;
+var initXYpos = 0;
 // var index = 1;
 
 $(document).ready(function() {
@@ -115,15 +115,26 @@ $(document).ready(function() {
       }
     );
 
+    // $("#canvas").hover(
+    //     function(){
+    //       getPosition("button_"+index);
+    //     }
+    // );
+
     setDragButtons();
 
-    //Display position
-    displayPosition();
-
-    //Dragging
-    // $(function() {
-    //     // document.body.style.cursor = 'none';
-    //     $( ".buttons" ).draggable({ snap: true });
+    // $('#canvas_container').mouseover(function(){
+    //   timer =  setInterval(function() {
+    //     var xPos = document.getElementById("button_1").style.left;
+    //     var yPos = document.getElementById("button_1").style.top;
+    //     document.getElementById('button_1_fieldX').value = document.getElementById('button_1').style.left;
+    //     document.getElementById('button_1_fieldY').value = document.getElementById('button_1').style.top;
+    //     $('#xpos').text('x: ' + xPos);
+    //     $('#ypos').text('y: ' + yPos);
+    //   }, 10);
+    // });
+    //   $('#canvas_container').mouseout(function() {
+    //     clearInterval(timer);
     // });
 
 });
@@ -162,7 +173,7 @@ function init(index){
       '</div>');
 
       //Add button
-      $("#canvas").append('<div onclick="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      $("#canvas").append('<div onmouseover="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
       setDragButtons();
 
     totalForm++;
@@ -215,9 +226,9 @@ function appendForm(index){
             '<i onClick="getId();" class="fa fa-times"></i>'+
         '</div>');
 
-      //Add button
-      $("#canvas").append('<div onclick="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
-      setDragButtons();
+        //Add button
+        $("#canvas").append('<div onmouseover="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+        setDragButtons();
 
       autoScroll(index);
       totalForm++;
@@ -330,18 +341,30 @@ function setDragButtons(){
   });
 }
 
+//
+// function getPosition(x){
+//   // var x = el.offsetLeft, y = el.offsetTop;
+//   document.getElementById('xpos').innerHTML = document.getElementById(x).style.top;
+//   document.getElementById('ypos').innerHTML = document.getElementById(x).style.left;
+//
+//   document.getElementById(x+'_fieldX').innerHTML = document.getElementById(x).style.top;
+//   // updatePos(x);
+//   // alert(x+'_fieldX');
+// }
+
 
 function getPosition(x){
-  // var x = el.offsetLeft, y = el.offsetTop;
-  document.getElementById('xpos').innerHTML = document.getElementById(x).style.top;
-  document.getElementById('ypos').innerHTML = document.getElementById(x).style.left;
-
-  document.getElementById(x+'_fieldX').innerHTML = document.getElementById(x).style.top;
-  // alert(x+'_fieldX');
-}
-
-function displayPosition(){
-  // var x = el.offsetLeft, y = el.offsetTop;
-  document.getElementById('xpos').innerHTML = "X:"+10;
-  document.getElementById('ypos').innerHTML = "Y:"+10;
+  $('#canvas_container').mouseover(function(){
+    timer =  setInterval(function() {
+      var xPos = document.getElementById(x).style.left;
+      var yPos = document.getElementById(x).style.top;
+      document.getElementById(x+'_fieldX').placeholder = document.getElementById(x).style.left;
+      document.getElementById(x+'_fieldY').placeholder = document.getElementById(x).style.top;
+      // $('#xpos').text('x: ' + xPos);
+      // $('#ypos').text('y: ' + yPos);
+    }, 10);
+  });
+  $('#canvas_container').mouseout(function() {
+      clearInterval(timer);
+  });
 }
