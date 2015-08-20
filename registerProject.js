@@ -117,6 +117,9 @@ $(document).ready(function() {
 
     setDragButtons();
 
+    //Display position
+    displayPosition();
+
     //Dragging
     // $(function() {
     //     // document.body.style.cursor = 'none';
@@ -147,11 +150,11 @@ function init(index){
           '<tr>'+
             '<td>'+
               '<a>Button Position-X: </a>'+
-              '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+              '<input id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
             '</td>'+
             '<td>'+
               '<a>Button Position-Y: </a>'+
-              '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+              '<input id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
             '</td>'+
           '</tr>'+
         '</table>'+
@@ -159,7 +162,7 @@ function init(index){
       '</div>');
 
       //Add button
-      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      $("#canvas").append('<div onclick="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
       setDragButtons();
 
     totalForm++;
@@ -201,11 +204,11 @@ function appendForm(index){
             '<tr>'+
               '<td>'+
                 '<a>Button Position-X: </a>'+
-                '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+                '<input id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
               '</td>'+
               '<td>'+
                 '<a>Button Position-Y: </a>'+
-                '<input onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+                '<input id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
               '</td>'+
             '</tr>'+
           '</table>'+
@@ -213,7 +216,7 @@ function appendForm(index){
         '</div>');
 
       //Add button
-      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      $("#canvas").append('<div onclick="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
       setDragButtons();
 
       autoScroll(index);
@@ -325,4 +328,20 @@ function setDragButtons(){
       ui.offset.left = Math.round(ui.position.left + canvasLeft);
     }
   });
+}
+
+
+function getPosition(x){
+  // var x = el.offsetLeft, y = el.offsetTop;
+  document.getElementById('xpos').innerHTML = document.getElementById(x).style.top;
+  document.getElementById('ypos').innerHTML = document.getElementById(x).style.left;
+
+  document.getElementById(x+'_fieldX').innerHTML = document.getElementById(x).style.top;
+  // alert(x+'_fieldX');
+}
+
+function displayPosition(){
+  // var x = el.offsetLeft, y = el.offsetTop;
+  document.getElementById('xpos').innerHTML = "X:"+10;
+  document.getElementById('ypos').innerHTML = "Y:"+10;
 }
