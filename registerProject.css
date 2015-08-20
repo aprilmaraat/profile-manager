@@ -133,8 +133,8 @@ textarea{
 #canvas_container{
   overflow: scroll;
   width: 102%;
-  height: 600px;
-  line-height: 600px;
+  height: 500px;
+  line-height: 500px;
   vertical-align: middle;
   background-color: #FCFCFC;
   background-image: url('tile.png');
