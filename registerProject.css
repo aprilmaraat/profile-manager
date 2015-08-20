@@ -131,20 +131,24 @@ textarea{
 }
 
 #canvas_container{
-  /*margin: 2%;*/
   overflow: scroll;
   width: 102%;
   height: 600px;
   line-height: 600px;
+  vertical-align: middle;
   background-color: #FCFCFC;
   background-image: url('tile.png');
-  margin-bottom: 2%;
+  /*margin-bottom: 2%;*/
+  /*margin: auto;*/
+  /*padding: 20px;*/
+  margin-bottom: 20px;
   border-style: solid;
   border-width: 1px;
   border-color: lightgray;
   text-align: center;
   border-radius: 3px;
   text-align: center;
+  position: relative;
 
   -webkit-transition: background-color .5s;    /* Chorme  */
   -moz-transition: background-color .5s;       /* Firefox */
@@ -185,11 +189,6 @@ textarea{
     transition: opacity .5s;           /* All */
 }
 
-/*#toolTip:hover{
-    letter-spacing: 0px;
-    opacity: 1;
-}*/
-
 .zoomTool{
   -webkit-transition: color .5s;    /* Chorme  */
   -moz-transition: color .5s;       /* Firefox */
@@ -203,16 +202,19 @@ textarea{
 }
 
 #canvas{
-  vertical-align: middle;
-  margin: 2%;
-  padding: auto;
+  /*text-align: center;*/
+  overflow: hidden;
+  /*margin: 2%;*/
   position: relative;
+  margin: auto;
+  /*padding: auto;*/
   color: white;
   background-color: white;
   height: 800px;
+  /*line-height: 800px;*/
+  vertical-align: middle;
   width: 1280px;
-  color: black;
-  right: 2px;
+  /*right: 2%;*/
 }
 
 #canvas .fa-picture-o{
@@ -225,7 +227,8 @@ textarea{
 }
 
 .buttons{
-    padding: 15px;
+    /*padding: 15px;*/
+    padding: 1%;
     /*margin: 0%;*/
     height: 50px;
     line-height: 50px;
@@ -236,12 +239,15 @@ textarea{
     /*left: 50px;
     top: 50px;*/
     vertical-align: middle;
+    overflow: hidden;
+    /*text-overflow: clip;*/
     /*background-color: red;*/
     border-radius: 10px;
     color: white;
     font-family: "Open Sans";
     text-transform: capitalize;
     border: 3px solid rgba(255, 0, 0, 0);
+    /*cursor: move;*/
     -webkit-background-clip: padding-box; /* for Safari */
     background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
@@ -250,13 +256,7 @@ textarea{
   cursor: move;
 }
 
-/*
-#canvas:hover{
-  border-color: #C2E0FF;
-}*/
-
-#canvas img{
-  /*position: absolute;*/
+/*#canvas img{
   margin: 0%;
   padding: 0%;
   min-width: 100%;
@@ -267,7 +267,7 @@ textarea{
   border: 10px;
   border-radius: 3px;
   z-index: -1px;
-}
+}*/
 
 .header_category{
   background-size: cover;

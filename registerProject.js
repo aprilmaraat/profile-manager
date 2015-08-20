@@ -2,6 +2,8 @@ var totalForm = 0;
 var maxForm = 20;
 var isFull = false;
 var currentZoom = 1.0;
+var currFontSize = 20;
+var initXYpos = 20;
 // var index = 1;
 
 $(document).ready(function() {
@@ -16,6 +18,7 @@ $(document).ready(function() {
   //REMOVE ALL BUTTON
   $("#remove_all_service").click(function(){
     $(".template").remove();
+    $(".buttons").remove();
     totalForm = 0;
     setTotalValue(totalForm);
     isFull = false;
@@ -112,12 +115,14 @@ $(document).ready(function() {
       }
     );
 
+    setDragButtons();
+
     //Dragging
-    $(function() {
-        $( "#draggable" ).draggable({ snap: true });
-        $( "#draggable2" ).draggable({ snap: true });
-        $( "#draggable3" ).draggable({ snap: true });
-    });
+    // $(function() {
+    //     // document.body.style.cursor = 'none';
+    //     $( ".buttons" ).draggable({ snap: true });
+    // });
+
 });
 
 function init(index){
@@ -153,14 +158,19 @@ function init(index){
           '<i onClick="getId();" class="fa fa-times"></i>'+
       '</div>');
 
+      //Add button
+      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      setDragButtons();
+
     totalForm++;
 }
 
 function getId(){
-  var id = "#"+event.target.parentNode.id;
+  var id = event.target.parentNode.id;
   totalForm--;
   setTotalValue(totalForm);
-  $(id).remove();
+  $("#"+id).remove();
+  $("#button_"+id).remove();
   isFull = false;
   enableAdd();
 }
@@ -201,6 +211,11 @@ function appendForm(index){
           '</table>'+
             '<i onClick="getId();" class="fa fa-times"></i>'+
         '</div>');
+
+      //Add button
+      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      setDragButtons();
+
       autoScroll(index);
       totalForm++;
     }
@@ -281,6 +296,33 @@ function canvasImage(input){
   // imageObj.src = 'default_bg1.png';
 }
 
-function disableCursor(){
+function setDragButtons(){
+  var pointerX;
+  var pointerY;
+  $(".buttons").draggable({
+    start : function(evt, ui) {
+      pointerY = (evt.pageY - $('#canvas').offset().top) / currentZoom - parseInt($(evt.target).css('top'));
+      pointerX = (evt.pageX - $('#canvas').offset().left) / currentZoom - parseInt($(evt.target).css('left'));
+    },
+    drag : function(evt, ui) {
+      var canvasTop = $('#canvas').offset().top;
+      var canvasLeft = $('#canvas').offset().left;
+      var canvasHeight = $('#canvas').height();
+      var canvasWidth = $('#canvas').width();
 
+      // Fix for zoom
+      ui.position.top = Math.round((evt.pageY - canvasTop) / currentZoom - pointerY);
+      ui.position.left = Math.round((evt.pageX - canvasLeft) / currentZoom - pointerX);
+
+      // Check if element is outside canvas
+      if (ui.position.left < 0) ui.position.left = 0;
+      if (ui.position.left + $(this).width() > canvasWidth) ui.position.left = canvasWidth - $(this).width();
+      if (ui.position.top < 0) ui.position.top = 0;
+      if (ui.position.top + $(this).height() > canvasHeight) ui.position.top = canvasHeight - $(this).height();
+
+      // Finally, make sure offset aligns with position
+      ui.offset.top = Math.round(ui.position.top + canvasTop);
+      ui.offset.left = Math.round(ui.position.left + canvasLeft);
+    }
+  });
 }
