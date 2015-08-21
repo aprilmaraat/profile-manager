@@ -153,11 +153,12 @@ function init(index){
       '</div>');
 
       //Add button
-      $("#canvas").append('<div onmouseover="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
       setDragButtons();
       goToButtonParentForm();
+      updateButtonPos(index);
 
-    totalForm++;
+      totalForm++;
 }
 
 function getId(){
@@ -208,9 +209,11 @@ function appendForm(index){
         '</div>');
 
         //Add button
-        $("#canvas").append('<div onmouseover="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+        $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+        // getPosition(x);
         setDragButtons();
         goToButtonParentForm();
+        updateButtonPos(index);
 
       autoScroll(index);
       totalForm++;
@@ -332,30 +335,19 @@ function goToButtonParentForm(){
   });
 }
 
-//
-// function getPosition(x){
-//   // var x = el.offsetLeft, y = el.offsetTop;
-//   document.getElementById('xpos').innerHTML = document.getElementById(x).style.top;
-//   document.getElementById('ypos').innerHTML = document.getElementById(x).style.left;
-//
-//   document.getElementById(x+'_fieldX').innerHTML = document.getElementById(x).style.top;
-//   // updatePos(x);
-//   // alert(x+'_fieldX');
-// }
-
-
-function getPosition(x){
-  $('#canvas_container').mouseover(function(){
-    timer =  setInterval(function() {
-      var xPos = document.getElementById(x).style.left;
-      var yPos = document.getElementById(x).style.top;
-      document.getElementById(x+'_fieldX').placeholder = document.getElementById(x).style.left;
-      document.getElementById(x+'_fieldY').placeholder = document.getElementById(x).style.top;
-      // $('#xpos').text('x: ' + xPos);
-      // $('#ypos').text('y: ' + yPos);
-    }, 10);
-  });
-  $('#canvas_container').mouseout(function() {
+function updateButtonPos(x){
+  $("#button_"+x).hover(
+  // $("#canvas").hover(
+    function(){
+        timer =  setInterval(function() {
+          var xPos = document.getElementById('button_'+x).style.left;
+          var yPos = document.getElementById('button_'+x).style.top;
+          document.getElementById('button_'+x+'_fieldX').placeholder = xPos;
+          document.getElementById('button_'+x+'_fieldY').placeholder = yPos;
+        }, 1);
+    },
+    function(){
       clearInterval(timer);
-  });
+    }
+  );
 }
