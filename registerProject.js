@@ -3,7 +3,7 @@ var maxForm = 20;
 var isFull = false;
 var currentZoom = 1.0;
 var currFontSize = 20;
-var initXYpos = 0;
+var initXYpos = 20;
 // var index = 1;
 
 $(document).ready(function() {
@@ -115,6 +115,8 @@ $(document).ready(function() {
       }
     );
 
+    document.getElementById('button_1').style.left = 100;
+
 });
 
 
@@ -141,11 +143,11 @@ function init(index){
           '<tr>'+
             '<td>'+
               '<a>Button Position-X: </a>'+
-              '<input id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+              '<input onchange="setPosX(this.id);" id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="'+initXYpos+'px">'+
             '</td>'+
             '<td>'+
               '<a>Button Position-Y: </a>'+
-              '<input id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+              '<input onchange="setPosY(this.id);" id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="'+initXYpos+'px">'+
             '</td>'+
           '</tr>'+
         '</table>'+
@@ -157,6 +159,7 @@ function init(index){
       setDragButtons();
       goToButtonParentForm();
       updateButtonPos(index);
+      // setPosX(index);
 
       totalForm++;
 }
@@ -197,11 +200,11 @@ function appendForm(index){
             '<tr>'+
               '<td>'+
                 '<a>Button Position-X: </a>'+
-                '<input id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+                '<input onchange="setPosX(this.id);" id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="'+initXYpos+'px">'+
               '</td>'+
               '<td>'+
                 '<a>Button Position-Y: </a>'+
-                '<input id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="0px">'+
+                '<input onchange="setPosY(this.id);" id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="'+initXYpos+'px">'+
               '</td>'+
             '</tr>'+
           '</table>'+
@@ -342,12 +345,44 @@ function updateButtonPos(x){
         timer =  setInterval(function() {
           var xPos = document.getElementById('button_'+x).style.left;
           var yPos = document.getElementById('button_'+x).style.top;
-          document.getElementById('button_'+x+'_fieldX').placeholder = xPos;
-          document.getElementById('button_'+x+'_fieldY').placeholder = yPos;
+          document.getElementById('button_'+x+'_fieldX').value = xPos;
+          document.getElementById('button_'+x+'_fieldY').value = yPos;
         }, 1);
     },
     function(){
       clearInterval(timer);
     }
   );
+}
+
+// function setPosX(x){
+//   document.getElementById(x).addEventListener("change", setValue(x));
+// }
+
+function setPosX(x){
+  a = x.replace(/^\D+|\D+$/g, "");
+  // alert("TEMP IS SUPPOSE TO BE: "+document.getElementById('button_'+a+'_fieldX').value);
+  var temp = document.getElementById('button_'+a+'_fieldX').value.replace(/\D+$/g, "")
+
+  document.getElementById('button_'+a).style.left = temp+'px';
+
+  document.getElementById('button_'+a+'_fieldX').value = document.getElementById('button_'+a+'_fieldX').value+"px";
+  document.getElementById('button_'+a+'_fieldX').value = temp+"px";
+
+  alert(temp);
+  // document.getElementById('button_'+a).style.left = temp;
+}
+
+function setPosY(y){
+  b = y.replace(/^\D+|\D+$/g, "");
+  // alert("TEMP IS SUPPOSE TO BE: "+document.getElementById('button_'+a+'_fieldX').value);
+  var temp = document.getElementById('button_'+b+'_fieldY').value.replace(/\D+$/g, "")
+
+  document.getElementById('button_'+b).style.top = temp+'px';
+
+  document.getElementById('button_'+b+'_fieldY').value = document.getElementById('button_'+b+'_fieldY').value+"px";
+  document.getElementById('button_'+b+'_fieldY').value = temp+"px";
+
+  alert(temp);
+  // document.getElementById('button_'+a).style.left = temp;
 }

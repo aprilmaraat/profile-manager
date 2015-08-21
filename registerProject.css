@@ -407,6 +407,7 @@ textarea{
   width: 50px;
   padding-left: 2%;
   padding-right: 2%;
+  text-transform: lowercase;
 }
 
 .fa-times{
