@@ -48,12 +48,12 @@ $(document).ready(function() {
     //ZOOM IN
     $("#zoomInButton").click(
       function(){
-        $('#canvas').animate({'zoom':currentZoom += .3},'slow');
+        $('#canvas').animate({'zoom':currentZoom += .2},'slow');
       });
     //ZOOM OUT
     $("#zoomOutButton").click(
       function(){
-        $('#canvas').animate({'zoom':currentZoom -= .3},'slow');
+        $('#canvas').animate({'zoom':currentZoom -= .2},'slow');
       });
     //NORMAL ZOOM
     $("#normalZoomButton").click(
@@ -115,30 +115,10 @@ $(document).ready(function() {
       }
     );
 
-    // $("#canvas").hover(
-    //     function(){
-    //       getPosition("button_"+index);
-    //     }
-    // );
-
-    setDragButtons();
-
-    // $('#canvas_container').mouseover(function(){
-    //   timer =  setInterval(function() {
-    //     var xPos = document.getElementById("button_1").style.left;
-    //     var yPos = document.getElementById("button_1").style.top;
-    //     document.getElementById('button_1_fieldX').value = document.getElementById('button_1').style.left;
-    //     document.getElementById('button_1_fieldY').value = document.getElementById('button_1').style.top;
-    //     $('#xpos').text('x: ' + xPos);
-    //     $('#ypos').text('y: ' + yPos);
-    //   }, 10);
-    // });
-    //   $('#canvas_container').mouseout(function() {
-    //     clearInterval(timer);
-    // });
-
 });
 
+
+//=========FUNCTIONS=========
 function init(index){
   $(".service_form").append('    <div id="'+index+'" class="template">'+
         '<i class="fa fa-star fa-1x"></i>'+
@@ -175,6 +155,7 @@ function init(index){
       //Add button
       $("#canvas").append('<div onmouseover="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
       setDragButtons();
+      goToButtonParentForm();
 
     totalForm++;
 }
@@ -194,7 +175,7 @@ function appendForm(index){
   tempTotal += 1;
 
   if(tempTotal <= maxForm){
-    $(".service_form").append('    <div id="'+index+'" class="template">'+
+    $(".service_form").prepend('    <div id="'+index+'" class="template">'+
           '<i class="fa fa-star fa-1x"></i>'+
           '<a>Service Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"'+
                                         'placeholder="What service do you provide?"><br><br>'+
@@ -229,6 +210,7 @@ function appendForm(index){
         //Add button
         $("#canvas").append('<div onmouseover="getPosition(this.id);" id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
         setDragButtons();
+        goToButtonParentForm();
 
       autoScroll(index);
       totalForm++;
@@ -338,6 +320,15 @@ function setDragButtons(){
       ui.offset.top = Math.round(ui.position.top + canvasTop);
       ui.offset.left = Math.round(ui.position.left + canvasLeft);
     }
+  });
+}
+
+//Auto Scroll to form when double clicked
+function goToButtonParentForm(){
+  $(".buttons").dblclick(function(){
+      // $(this).fadeOut();
+      var parent_index = this.id.replace( /^\D+/g, '');
+      autoScroll(parent_index);
   });
 }
 
