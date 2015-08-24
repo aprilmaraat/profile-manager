@@ -124,7 +124,7 @@ $(document).ready(function() {
 function init(index){
   $(".service_form").append('    <div id="'+index+'" class="template">'+
         '<i class="fa fa-star fa-1x"></i>'+
-        '<a>Service Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"'+
+        '<a>Service Name: </a></br> <input id="name_field_'+index+'" onclick="setName(this);" type="text" name="employee_name"'+
                                       'placeholder="What service do you provide?"><br><br>'+
         '<i class="fa fa-sort-desc fa-1x"></i>'+
         '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
@@ -369,7 +369,7 @@ function setPosX(x){
   document.getElementById('button_'+a+'_fieldX').value = document.getElementById('button_'+a+'_fieldX').value+"px";
   document.getElementById('button_'+a+'_fieldX').value = temp+"px";
 
-  alert(temp);
+  // alert(temp);
   // document.getElementById('button_'+a).style.left = temp;
 }
 
@@ -383,6 +383,21 @@ function setPosY(y){
   document.getElementById('button_'+b+'_fieldY').value = document.getElementById('button_'+b+'_fieldY').value+"px";
   document.getElementById('button_'+b+'_fieldY').value = temp+"px";
 
-  alert(temp);
+  // alert(temp);
+  // document.getElementById('button_'+a).style.left = temp;
+}
+
+function setName(a){
+  a.select();
+  b = a.id.replace(/^\D+|\D+$/g, "");
+  // alert("TEMP IS SUPPOSE TO BE: "+document.getElementById('button_'+a+'_fieldX').value);
+  var temp = document.getElementById('name_field_'+b).value.replace(/\D+$/g, "")
+
+  document.getElementById('button_'+b).text = document.getElementById('name_field_'+b);
+
+  // document.getElementById('button_'+b+'_fieldY').value = document.getElementById('button_'+b+'_fieldY').value+"px";
+  // document.getElementById('button_'+b+'_fieldY').value = temp+"px";
+
+  // alert(temp);
   // document.getElementById('button_'+a).style.left = temp;
 }
