@@ -3,8 +3,9 @@ var maxForm = 20;
 var isFull = false;
 var currentZoom = 1.0;
 var currFontSize = 20;
-var initXYpos = 20;
+var initXYpos = 0;
 // var index = 1;
+var xmlHttp = createXmlHttpsRequestObject();
 
 $(document).ready(function() {
   var index = 1;
@@ -119,12 +120,12 @@ $(document).ready(function() {
 
 });
 
-
 //=========FUNCTIONS=========
 function init(index){
+  // process();
   $(".service_form").append('    <div id="'+index+'" class="template">'+
         '<i class="fa fa-star fa-1x"></i>'+
-        '<a>Service Name: </a></br> <input id="name_field_'+index+'" onclick="setName(this);" type="text" name="employee_name"'+
+        '<a>Service Name: </a></br> <input id="name_field_'+index+'" onchange="setName(this);" type="text" name="employee_name"'+
                                       'placeholder="What service do you provide?"><br><br>'+
         '<i class="fa fa-sort-desc fa-1x"></i>'+
         '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
@@ -133,7 +134,7 @@ function init(index){
           '<tr>'+
             '<td>'+
               '<a>Button Image</a>'+
-              '<input type="file" name="start_img">'+
+              '<input id="button_image_'+index+'" onchange="changeButtonImage(this);" type="file" name="start_img">'+
             '</td>'+
             '<td>'+
               '<a>Table Image</a>'+
@@ -151,11 +152,13 @@ function init(index){
             '</td>'+
           '</tr>'+
         '</table>'+
-          '<i onClick="getId();" class="fa fa-times"></i>'+
+          '<i onClick="removeService();" class="fa fa-times"></i>'+
       '</div>');
 
       //Add button
-      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      // $("#canvas").append('<div id="button_'+index+'" class="buttons" style="background-image:url(dave.png); top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+      $("#canvas").append('<div id="button_'+index+'" class="buttons" top:'+initXYpos+'px; left:'+initXYpos+'px;">Button '+index+'</div>');
+
       setDragButtons();
       goToButtonParentForm();
       updateButtonPos(index);
@@ -164,9 +167,10 @@ function init(index){
       totalForm++;
 }
 
-function getId(){
+function removeService(){
   var id = event.target.parentNode.id;
   totalForm--;
+  alert(totalForm);
   setTotalValue(totalForm);
   $("#"+id).remove();
   $("#button_"+id).remove();
@@ -181,7 +185,7 @@ function appendForm(index){
   if(tempTotal <= maxForm){
     $(".service_form").prepend('    <div id="'+index+'" class="template">'+
           '<i class="fa fa-star fa-1x"></i>'+
-          '<a>Service Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"'+
+          '<a>Service Name: </a></br> <input id="name_field_'+index+'" onchange="setName(this);" type="text" name="employee_name"'+
                                         'placeholder="What service do you provide?"><br><br>'+
           '<i class="fa fa-sort-desc fa-1x"></i>'+
           '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
@@ -190,7 +194,7 @@ function appendForm(index){
             '<tr>'+
               '<td>'+
                 '<a>Button Image</a>'+
-                '<input type="file" name="start_img">'+
+                '<input id="button_image_'+index+'" onchange="changeButtonImage(this);" type="file" name="start_img">'+
               '</td>'+
               '<td>'+
                 '<a>Table Image</a>'+
@@ -208,18 +212,18 @@ function appendForm(index){
               '</td>'+
             '</tr>'+
           '</table>'+
-            '<i onClick="getId();" class="fa fa-times"></i>'+
+            '<i onClick="removeService();" class="fa fa-times"></i>'+
         '</div>');
 
         //Add button
-        $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
+        $("#canvas").append('<div id="button_'+index+'" class="buttons" top:'+initXYpos+'px; left:'+initXYpos+'px;">Button '+index+'</div>');
         // getPosition(x);
+        scrollToForm(index);
         setDragButtons();
         goToButtonParentForm();
         updateButtonPos(index);
 
-      autoScroll(index);
-      totalForm++;
+        totalForm++;
     }
 
     if(totalForm >= maxForm){
@@ -228,19 +232,16 @@ function appendForm(index){
     }
 }
 
-//If disabled
 function disableAdd(){
     $('#add_service').removeClass('enabled');
     $('#add_service').addClass('disabled');
 }
 
-//If enabled
 function enableAdd(){
   $('#add_service').addClass('enabled');
   $('#add_service').removeClass('disabled');
 }
 
-//Set Total Value in HTML
 function setTotalValue(){
   document.getElementById("totalFormHtml").innerHTML = "("+totalForm+")";
 
@@ -250,22 +251,38 @@ function setTotalValue(){
 
 function autoScroll(index){
   // $("html, body").animate({ scrollTop: $("#service_counter").offset().top }, "slow");
-  $("html, body").animate({ scrollTop: $("#"+index).offset().top - 300 }, "slow");
+  $("body,html").animate({ scrollTop: $("#"+index).offset().top}, 800);
+  // $.scrollify.move("#"+index);
+}
+
+function scrollToForm(index){
+  // $("html, body").animate({ scrollTop: $("#service_counter").offset().top }, "slow");
+  // $("html, body").animate({ scrollTop: $("#"+index).offset().top - 300 }, "slow");
+  $('body,html').animate({scrollTop: $("#"+index).offset().top}, 800);
 }
 
 function changeBgImage(input){
-  // document.getElementById("canvas").style.background = "red";
   if (input.files && input.files[0]) {
       var reader = new FileReader();
 
       reader.onload = function (e) {
+        document.getElementById("canvas").style.backgroundColor = "#858585";
         $('#canvas').css("background-image","url("+e.target.result+")");
       };
+      reader.readAsDataURL(input.files[0]);
+  }
+}
 
-      // alert(input.files[0]);
-      // document.getElementById("canvas").style.content = input.files[0];
-      // document.getElementById("canvas").style.color = red;
+function changeButtonImage(input){
+  var button_id = "button_"+input.id.replace(/^\D+|\D+$/g, "");;
 
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        document.getElementById(button_id).style.backgroundColor = "#A6A6A6";
+        $("#"+button_id).css("background-image","url("+e.target.result+")");
+      };
       reader.readAsDataURL(input.files[0]);
   }
 }
@@ -329,7 +346,6 @@ function setDragButtons(){
   });
 }
 
-//Auto Scroll to form when double clicked
 function goToButtonParentForm(){
   $(".buttons").dblclick(function(){
       // $(this).fadeOut();
@@ -354,10 +370,6 @@ function updateButtonPos(x){
     }
   );
 }
-
-// function setPosX(x){
-//   document.getElementById(x).addEventListener("change", setValue(x));
-// }
 
 function setPosX(x){
   a = x.replace(/^\D+|\D+$/g, "");
@@ -390,14 +402,73 @@ function setPosY(y){
 function setName(a){
   a.select();
   b = a.id.replace(/^\D+|\D+$/g, "");
-  // alert("TEMP IS SUPPOSE TO BE: "+document.getElementById('button_'+a+'_fieldX').value);
-  var temp = document.getElementById('name_field_'+b).value.replace(/\D+$/g, "")
+  var temp = document.getElementById('name_field_'+b).value;
 
-  document.getElementById('button_'+b).text = document.getElementById('name_field_'+b);
+  var rawInput = temp.split(' ').join('');
+  var tempName = (rawInput.length > 0)?
+                  temp:"Button "+b;
 
-  // document.getElementById('button_'+b+'_fieldY').value = document.getElementById('button_'+b+'_fieldY').value+"px";
-  // document.getElementById('button_'+b+'_fieldY').value = temp+"px";
+  document.getElementById('button_'+b).innerHTML = tempName;
 
-  // alert(temp);
-  // document.getElementById('button_'+a).style.left = temp;
+  // if (document.getElementById('name_field_'+b).value.length > 0) {
+  //   document.getElementById('button_'+b).innerHTML = document.getElementById('name_field_'+b).value;
+  //   return false;
+  // }
+  // else{
+  //   document.getElementById('button_'+b).innerHTML = "Button "+b;
+  // }
+
+  // document.getElementById('button_'+b).innerHTML = document.getElementById('name_field_'+b).value;
+  // alert(document.getElementById('button_'+b).innerHTML);
+}
+
+
+function createXmlHttpsRequestObject(){
+    var xmlHttp;
+
+    if(window.ActiveXObject){
+      try{
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }catch(e){
+        xmlHttp = false;
+      }
+    }else{
+      try{
+        xmlHttp = new XMLHttpRequest();
+      }catch(e){
+        xmlHttp = false;
+      }
+    }
+
+    if(!xmlHttp)
+      alert("cant create that object hoss!");
+    else
+      return xmlHttp;
+}
+
+//Call in <body>
+function process(){
+  if(xmlHttp.readyState==0 || xmlHttp.readyState==4){
+    projectname = encodeURIComponent(document.getElementById("projectname_field").value);
+    xmlHttp.open("GET","updateform.php?projectname=" + projectname, true);
+    xmlHttp.onreadystatechange = handleServerResponse;
+    xmlHttp.send(null);
+  }else{
+    setTimeout('process()',1000);
+  }
+}
+
+function handleServerResponse(){
+  if(xmlHttp.readyState==4){
+    if(xmlHttp.status==200){
+      xmlResponse = xmlHttp.responseXML;
+      xmlDocumentElement = xmlResponse.documentElement;
+      message = xmlDocumentElement.firstChild.data;
+      document.getElementById("ouput_message").innerHTML = '<span style="color:red">'+ message +'</span>';
+      setTimeout('process()',1000);
+    }
+    else{
+      alert("Something went wrong");
+    }
+  }
 }

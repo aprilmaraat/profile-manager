@@ -2,11 +2,14 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
 @import url(http://fonts.googleapis.com/css?family=Raleway:300);
 @import url(http://fonts.googleapis.com/css?family=Allerta);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700);
 
 body{
   background-color: white;
   padding: 0px;
   margin: 0px;
+  padding-bottom: 5%;
+  /*text-align: center;*/
 }
 
 .fa{
@@ -130,6 +133,13 @@ textarea{
   min-height: 50px;
 }
 
+.info_output{
+  font-size: 12px;
+  text-transform: capitalize;
+  font-family: 'Allerta';
+  padding-left: 5px;
+}
+
 #canvas_container{
   overflow: scroll;
   width: 102%;
@@ -214,6 +224,10 @@ textarea{
   /*line-height: 800px;*/
   vertical-align: middle;
   width: 1280px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-blend-mode:  multiply;
   /*right: 2%;*/
 }
 
@@ -229,25 +243,39 @@ textarea{
 .buttons{
     /*padding: 15px;*/
     padding: 1%;
-    /*margin: 0%;*/
-    height: 50px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin: 5px;
     line-height: 50px;
     width: auto;
-    min-width: calc(50px*2);
+    min-width: calc(50px*3);
+    max-width: calc(50px*10);
     position: absolute;
-    font-size: 20px;
-    /*left: 50px;
-    top: 50px;*/
+    font-size: 40px;
+    /*text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;*/
+    /*font-variant-east-asian: */
     vertical-align: middle;
     overflow: hidden;
-    /*text-overflow: clip;*/
-    /*background-color: red;*/
-    border-radius: 10px;
+    /*display: block;*/
+    /*word-break: all;*/
+    text-overflow: hidden;
+    letter-spacing: 2px;
+    background-color: #3399FF;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-blend-mode:  multiply;
+    border-radius: 5px;
     color: white;
-    font-family: "Open Sans";
+    font-family: "Montserrat";
     text-transform: capitalize;
-    border: 3px solid rgba(255, 0, 0, 0);
-    /*cursor: move;*/
+    border-style: solid;
+    border-width: 5px;
+    border-color: white;
     -webkit-background-clip: padding-box; /* for Safari */
     background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
@@ -445,4 +473,21 @@ textarea{
   text-align: center;
   padding-top: 20px;
   padding-bottom: 30px;
+}
+
+/*#button_container{*/
+  /*background-color: red;*/
+  /*text-align: center;
+    margin: 0 auto;
+}*/
+
+#submit_button{
+  text-align: center;
+  vertical-align: middle;
+  width: 50%;
+  height: 50px;
+  margin: 0 auto;
+  line-height: 50px;
+  background-color: #fff;
+  border-radius: 10px;
 }

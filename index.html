@@ -22,11 +22,12 @@
   <div id = "register_form">
     <!-- <h1>Company Profile</h1><br> -->
     <i class="fa fa-user fa-1x"></i>
-    <a>Employee Name: </a></br> <input onclick="this.select();" type="text" name="employee_name"
+    <a>Employee Name: </a></br> <input id="username_field" onclick="this.select();" type="text" name="employee_name"
                                   placeholder="enter your name"><br><br>
     <i class="fa fa-suitcase fa-1x"></i>
-    <a>Project Name: </a></br> <input onclick="this.select();" type="text" name="project_name"
+    <a>Project Name: </a><a id="ouput_message" class="info_output"></a></br> <input id="projectname_field" onchange="process()" onclick="this.select();" type="text" name="project_name"
                                   placeholder="enter the project name"><br><br>
+
     <i class="fa fa-align-justify fa-1x"></i>
     <a>Project Description: </a></br> <input onclick="this.select();" type="text" name="project_desc"
                                     placeholder="describe the project"><br>
@@ -87,21 +88,10 @@
   </div>
 
   <div id="canvas_container">
-    <!-- <canvas id="canvas" width="500" height="374">
-      Your browser does not support the HTML5 canvas tag.
-    </canvas> -->
     <div id="canvas">
       <!-- <div class="buttons" style="top:0px; left:0px; background-color: #3399FF;">Button</div> -->
     </div>
   </div>
-
-  <!-- <script>
-  var c = document.getElementById("canvas");
-  var ctx = c.getContext("2d");
-  ctx.fillStyle = "#3399FF";
-  ctx.fillRect(1,1,200,100);
-
-  </script> -->
 
   <i class="fa fa-picture-o fa-1x"></i>
   <a>Background Image:</a>
@@ -134,7 +124,11 @@
 
   <div id="service_counter">-Empty-</div>
 
-  <hr>
+  <hr></br>
+
+  <div id="button_container">
+    <div id="submit_button"><i class="fa fa-paper-plane"></i><a>  Submit</a></div>
+  </div>
 
 </div>
 </body>
