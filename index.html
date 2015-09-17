@@ -18,18 +18,18 @@
   <a>Profile Manager</a>
 </div>
 
-<div id="form_area" class="nonselectable">
+<form id="form_area" class="nonselectable">
   <div id = "register_form">
     <!-- <h1>Company Profile</h1><br> -->
     <i class="fa fa-user fa-1x"></i>
     <a>Employee Name: </a></br> <input id="username_field" onclick="this.select();" type="text" name="employee_name"
                                   placeholder="enter your name"><br><br>
     <i class="fa fa-suitcase fa-1x"></i>
-    <a>Project Name: </a><a id="ouput_message" class="info_output"></a></br> <input id="projectname_field" onchange="process()" onclick="this.select();" type="text" name="project_name"
+    <a>Project Name: </a><a id="ouput_message" class="info_output"></a></br> <input id="projectname_field" onclick="this.select();" type="text" name="project_name"
                                   placeholder="enter the project name"><br><br>
 
     <i class="fa fa-align-justify fa-1x"></i>
-    <a>Project Description: </a></br> <input onclick="this.select();" type="text" name="project_desc"
+    <a>Project Description: </a></br> <input id="projectSummary_field" onclick="this.select();" type="text" name="project_desc"
                                     placeholder="describe the project"><br>
 
     <br><br>
@@ -48,7 +48,7 @@
       </tr>
       <tr>
         <td>
-          <input type="file" name="wait_img">
+          <input id="idleImage" type="file" name="wait_img">
         </td>
         <td>
           <input type="file" name="start_img">
@@ -60,8 +60,8 @@
     <i class="fa fa-comment fa-1x"></i>
     <a>Greetings:</a>
     <div class="section">
-      <a>Greeting: </a></br> <textarea onclick="this.select();" name="start_greeting">Hello, Human!...</textarea><br><br>
-      <a>Parting Phrase: </a></br> <textarea onclick="this.select();" name="end_greeting">Goodbye, Human!...</textarea><br>
+      <a>Greeting: </a></br> <textarea id="startGreeting_field" onclick="this.select();" name="start_greeting">Hello, Human!...</textarea><br><br>
+      <a>Parting Phrase: </a></br> <textarea id="endGreeting_field" onclick="this.select();" name="end_greeting">Goodbye, Human!...</textarea><br>
     </div>
   </div>
   <br><br>
@@ -127,9 +127,9 @@
   <hr></br>
 
   <div id="button_container">
-    <div id="submit_button"><i class="fa fa-paper-plane"></i><a>  Submit</a></div>
+    <div id="submit_button" onclick='submitForm();'><i class="fa fa-paper-plane"></i><a>  Submit</a></div>
   </div>
 
-</div>
+</form>
 </body>
 </html>

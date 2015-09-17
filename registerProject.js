@@ -4,11 +4,24 @@ var isFull = false;
 var currentZoom = 1.0;
 var currFontSize = 20;
 var initXYpos = 0;
+var canSubmit = 0;
+
+var ServiceIdArray = new Array(); //Declare Array for Services' Id's
+ServiceIdArray.push("1"); //Add index '1' from the auto-generated Service //Temporary place for code
+
+var serviceArray = {
+  ServiceName: ['None'],
+  ServiceDescription: ['None'],
+  ButtonPosX: ['None'],
+  ButtonPosY: ['None']
+};
+
 // var index = 1;
-var xmlHttp = createXmlHttpsRequestObject();
+// var xmlHttp = createXmlHttpsRequestObject();
 
 $(document).ready(function() {
   var index = 1;
+  // serviceIDs.push(index);
   // var totalForm = 0;
 
   //Initalize
@@ -25,11 +38,16 @@ $(document).ready(function() {
     isFull = false;
     enableAdd();
     alert("Delete All");
+
+    ServiceIdArray = [] //Empty Array
+    alert(ServiceIdArray);
   });
 
   //ADD SERVICE FROM
   $("#add_service").click(function(){
       appendForm(index);
+      ServiceIdArray.push(index.toString()); //Add data (Service ID) to Array
+      alert(ServiceIdArray);
       index++;
       setTotalValue(totalForm);
   });
@@ -118,6 +136,14 @@ $(document).ready(function() {
 
     document.getElementById('button_1').style.left = 100;
 
+    // $("#submit_button").click(function(){
+    //
+    // });//end of   $("#submit_button").click(function(){
+
+    $("#projectname_field").on('input',function(){
+      checkProjectName();
+    });
+
 });
 
 //=========FUNCTIONS=========
@@ -128,7 +154,7 @@ function init(index){
         '<a>Service Name: </a></br> <input id="name_field_'+index+'" onchange="setName(this);" type="text" name="employee_name"'+
                                       'placeholder="What service do you provide?"><br><br>'+
         '<i class="fa fa-sort-desc fa-1x"></i>'+
-        '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
+        '<a>Service Description: </a></br> <textarea id="service_description_'+index+'" onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
 
         '<table class="template_elem">'+
           '<tr>'+
@@ -150,6 +176,11 @@ function init(index){
               '<a>Button Position-Y: </a>'+
               '<input onchange="setPosY(this.id);" id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="'+initXYpos+'px">'+
             '</td>'+
+            '<td>'+
+              // '<a>Display</a>'+
+              '<input id="check_'+index+'" onchange="checkBoxCheck(this.id)" type="checkbox" checked><label for="check_'+index+'" />'+
+              // '<div class="switch"><i class="fa fa-eye"></i></div>'+
+            '</td>'+
           '</tr>'+
         '</table>'+
           '<i onClick="removeService();" class="fa fa-times"></i>'+
@@ -157,20 +188,27 @@ function init(index){
 
       //Add button
       // $("#canvas").append('<div id="button_'+index+'" class="buttons" style="background-image:url(dave.png); top:'+initXYpos+'px; left:'+initXYpos+'px; background-color: #3399FF;">Button '+index+'</div>');
-      $("#canvas").append('<div id="button_'+index+'" class="buttons" top:'+initXYpos+'px; left:'+initXYpos+'px;">Button '+index+'</div>');
+      $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px;">Button '+index+'</div>');
 
       setDragButtons();
       goToButtonParentForm();
       updateButtonPos(index);
       // setPosX(index);
-
+      // serviceIDs.push(index);
       totalForm++;
 }
 
 function removeService(){
   var id = event.target.parentNode.id;
+
+  var _index = ServiceIdArray.indexOf(id.toString()); //Get the index of the value inside the Array
+  alert("Selected ID: " + id);
+  ServiceIdArray.splice(_index, 1); //I don't know what happened but it works. To delete the data of the desired index (_index), must use the index before the desired index (_index - 1) to delete the data of the desired index.
+  alert("Current values inside of the array: " + ServiceIdArray);
+
+  // var currIndex = array.indexOf(id);
+  // serviceIDs.remove(id);
   totalForm--;
-  alert(totalForm);
   setTotalValue(totalForm);
   $("#"+id).remove();
   $("#button_"+id).remove();
@@ -188,7 +226,7 @@ function appendForm(index){
           '<a>Service Name: </a></br> <input id="name_field_'+index+'" onchange="setName(this);" type="text" name="employee_name"'+
                                         'placeholder="What service do you provide?"><br><br>'+
           '<i class="fa fa-sort-desc fa-1x"></i>'+
-          '<a>Service Description: </a></br> <textarea onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
+          '<a>Service Description: </a></br> <textarea id="service_description_'+index+'" onclick="this.select();" name="start_greeting">Describe the service, please...</textarea><br><br>'+
 
           '<table class="template_elem">'+
             '<tr>'+
@@ -210,19 +248,24 @@ function appendForm(index){
                 '<a>Button Position-Y: </a>'+
                 '<input onchange="setPosY(this.id);" id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" placeholder="'+initXYpos+'px">'+
               '</td>'+
+              '<td>'+
+                // '<a>Display</a>'+
+              '<input id="check_'+index+'" onchange="checkBoxCheck(this.id)" type="checkbox" checked><label for="check_'+index+'" />'+
+                // '<div class="switch"><i class="fa fa-eye"></i></div>'+
+              '</td>'+
             '</tr>'+
           '</table>'+
             '<i onClick="removeService();" class="fa fa-times"></i>'+
         '</div>');
 
         //Add button
-        $("#canvas").append('<div id="button_'+index+'" class="buttons" top:'+initXYpos+'px; left:'+initXYpos+'px;">Button '+index+'</div>');
+        $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+initXYpos+'px; left:'+initXYpos+'px;">Button '+index+'</div>');
         // getPosition(x);
         scrollToForm(index);
         setDragButtons();
         goToButtonParentForm();
         updateButtonPos(index);
-
+        // serviceIDs.push(index);
         totalForm++;
     }
 
@@ -410,65 +453,120 @@ function setName(a){
 
   document.getElementById('button_'+b).innerHTML = tempName;
 
-  // if (document.getElementById('name_field_'+b).value.length > 0) {
-  //   document.getElementById('button_'+b).innerHTML = document.getElementById('name_field_'+b).value;
-  //   return false;
-  // }
-  // else{
-  //   document.getElementById('button_'+b).innerHTML = "Button "+b;
-  // }
-
-  // document.getElementById('button_'+b).innerHTML = document.getElementById('name_field_'+b).value;
-  // alert(document.getElementById('button_'+b).innerHTML);
 }
 
-
-function createXmlHttpsRequestObject(){
-    var xmlHttp;
-
-    if(window.ActiveXObject){
-      try{
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }catch(e){
-        xmlHttp = false;
-      }
-    }else{
-      try{
-        xmlHttp = new XMLHttpRequest();
-      }catch(e){
-        xmlHttp = false;
-      }
-    }
-
-    if(!xmlHttp)
-      alert("cant create that object hoss!");
-    else
-      return xmlHttp;
-}
-
-//Call in <body>
-function process(){
-  if(xmlHttp.readyState==0 || xmlHttp.readyState==4){
-    projectname = encodeURIComponent(document.getElementById("projectname_field").value);
-    xmlHttp.open("GET","updateform.php?projectname=" + projectname, true);
-    xmlHttp.onreadystatechange = handleServerResponse;
-    xmlHttp.send(null);
-  }else{
-    setTimeout('process()',1000);
+function checkBoxCheck(project_id){
+  var id = project_id.replace(/^\D+|\D+$/g, "");
+  var hidden=$("#"+project_id).is(":checked");
+  if(!hidden){
+    document.getElementById("button_"+id).style.display = 'none';
+    document.getElementById(id).style.backgroundColor = '#F7F7F7';
+  }
+  else{
+    document.getElementById("button_"+id).style.display = 'block';
+    document.getElementById(id).style.backgroundColor = '#EAF5FF';
   }
 }
 
-function handleServerResponse(){
-  if(xmlHttp.readyState==4){
-    if(xmlHttp.status==200){
-      xmlResponse = xmlHttp.responseXML;
-      xmlDocumentElement = xmlResponse.documentElement;
-      message = xmlDocumentElement.firstChild.data;
-      document.getElementById("ouput_message").innerHTML = '<span style="color:red">'+ message +'</span>';
-      setTimeout('process()',1000);
+// AJAX MAGIC PART
+
+function submitForm(){
+  var employeeName = document.getElementById('username_field').value.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  var projectName = document.getElementById('projectname_field').value.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  var projectSummary = document.getElementById('projectSummary_field').value;
+  var startGreeting = document.getElementById('startGreeting_field').value;
+  var endGreeting = document.getElementById('endGreeting_field').value;
+  // alert(document.getElementById('projectSummary_field').textContent);
+
+  if(projectName!=''){
+    if(canSubmit==0){
+      $.ajax({
+        url: "project.php",
+        data: "EmployeeName="+employeeName+
+              "&ProjectName="+projectName+
+              "&ProjectSummary="+projectSummary+
+              "&StartGreeting="+startGreeting+
+              "&EndGreeting="+endGreeting+
+              "&ServiceIdArray="+ServiceIdArray,
+
+
+        type: "POST",
+        dataType: 'json',
+        success: function (data) {
+          if (data) {
+            canSubmit = 1;
+            alert("Saved");
+            saveServices(data);
+          }
+          else{
+            alert("Something went wrong!");
+          }
+          },
+          error: function () {
+            alert('Something went wrong.');
+          }
+        });
+      }
+      else{
+        alert("Project Name is already taken!");
+        document.getElementById('ouput_message').innerHTML = "*Already taken";
+      }
+  }
+  else{
+    alert("Project Name is required");
+    document.getElementById('ouput_message').innerHTML = "*Required field";
+  }
+}
+
+function checkProjectName(){
+  var val = document.getElementById('projectname_field');
+
+  if(val.value.length>0){
+    document.getElementById('ouput_message').innerHTML = '';
+
+    $.ajax({
+      url: "checkProjects.php",
+      data: "ProjectName=" +val.value,
+      type: "POST",
+      dataType: 'json',
+      success: function(data){
+        if(data == "Success"){
+          document.getElementById('ouput_message').innerHTML = "*Already taken";
+          canSubmit = 1;
+        }
+        else{
+          canSubmit = 0;
+        }
+      }
+    });
+  }
+
+}
+
+function saveServices(project_id){
+  for (index = 0; index < ServiceIdArray.length; index++) {
+    var sName = $("#name_field_" + ServiceIdArray[index]).val();
+    if(sName == ""){
+      sName = "Button "+(index+1);
     }
-    else{
-      alert("Something went wrong");
-    }
+    var sDescription = $("#service_description_" + ServiceIdArray[index]).val();
+    var fX = $("#button_"+ServiceIdArray[index]+"_fieldX").val();
+    var fY = $("#button_"+ServiceIdArray[index]+"_fieldY").val();
+    var isHide = $("#check_"+(index+1)).is(":checked");
+    (isHide == false) ? isHide=0 : isHide=1;
+
+    alert("Button_"+index+"==="+isHide);
+    $.ajax({
+    url: "save_services.php",
+    data: "ProjectId=" + project_id + "&ServiceName=" + sName + "&ServiceDescription=" + sDescription + "&FieldX=" + fX + "&FieldY=" + fY + "&DisplayButton=" + isHide,
+    type: "POST",
+    dataType: 'json',
+      // success: function (data) {
+      //   alert(data);
+      // },
+      error: function () {
+        alert('Something went wrong.');
+      }
+    });
   }
 }
