@@ -40,14 +40,14 @@ $(document).ready(function() {
     alert("Delete All");
 
     ServiceIdArray = [] //Empty Array
-    alert(ServiceIdArray);
+    // alert(ServiceIdArray);
   });
 
   //ADD SERVICE FROM
   $("#add_service").click(function(){
       appendForm(index);
       ServiceIdArray.push(index.toString()); //Add data (Service ID) to Array
-      alert(ServiceIdArray);
+      // alert(ServiceIdArray);
       index++;
       setTotalValue(totalForm);
   });
@@ -202,9 +202,9 @@ function removeService(){
   var id = event.target.parentNode.id;
 
   var _index = ServiceIdArray.indexOf(id.toString()); //Get the index of the value inside the Array
-  alert("Selected ID: " + id);
+  // alert("Selected ID: " + id);
   ServiceIdArray.splice(_index, 1); //I don't know what happened but it works. To delete the data of the desired index (_index), must use the index before the desired index (_index - 1) to delete the data of the desired index.
-  alert("Current values inside of the array: " + ServiceIdArray);
+  // alert("Current values inside of the array: " + ServiceIdArray);
 
   // var currIndex = array.indexOf(id);
   // serviceIDs.remove(id);
@@ -555,7 +555,7 @@ function saveServices(project_id){
     var isHide = $("#check_"+(index+1)).is(":checked");
     (isHide == false) ? isHide=0 : isHide=1;
 
-    alert("Button_"+index+"==="+isHide);
+    // alert("Button_"+index+"==="+isHide);
     $.ajax({
     url: "save_services.php",
     data: "ProjectId=" + project_id + "&ServiceName=" + sName + "&ServiceDescription=" + sDescription + "&FieldX=" + fX + "&FieldY=" + fY + "&DisplayButton=" + isHide,
