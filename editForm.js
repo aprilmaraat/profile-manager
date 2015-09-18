@@ -158,7 +158,7 @@ function preLoadData(){
 function getProject(){
   $.ajax({
     url: "get_project.php",
-    data: "ProjectId=" + "02ec9f1a-e277-5e44-0baf-d961fad932cc", // Use this when passing ProjectId variable is implemented
+    data: "ProjectId=" + "05dbafc7-98ec-6385-a4c1-2c4fd7347d37", // Use this when passing ProjectId variable is implemented
     type: "POST",
     dataType: 'json',
     success: function(data){
@@ -180,7 +180,7 @@ function setProjectInfo(empName, projName, projSummary, startGreeting, endGreeti
 function getServices(){
   $.ajax({
     url: "get_services.php",
-    data: "ProjectId=" + "02ec9f1a-e277-5e44-0baf-d961fad932cc", // Use this when passing ProjectId variable is implemented
+    data: "ProjectId=" + "05dbafc7-98ec-6385-a4c1-2c4fd7347d37", // Use this when passing ProjectId variable is implemented
     type: "POST",
     dataType: 'json',
     success: function(data){
@@ -188,8 +188,9 @@ function getServices(){
       for(var ctr = 0; ctr < serviceCount; ctr++){
         createButtons(index, data[ctr].x, data[ctr].y, data[ctr].name, data[ctr].displayFlag, data[ctr].description);
         index++;
-        //createButtons(INDEX,X-POS,Y-POS,SERVICE-NAME);
+        totalForm+1;
       }
+      setTotalValue(totalForm);
     }
   });
 }
@@ -242,6 +243,8 @@ function createButtons(index, yPos, xPos ,name, isDisplay, description){
   totalForm++;
   if(isDisplay == 0){
     document.getElementById("button_"+index).style.display = 'none';
+    document.getElementById("check_"+index).checked = false;
+    document.getElementById(index).style.backgroundColor = '#F7F7F7';
   }
 }
 
