@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Form</title>
+<link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="registerProject.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="editForm.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+</head>
+<body>
+
+<div id="nav_bar" class="nonselectable">
+  <i class="fa fa-cog fa-spin"></i>
+  <a>Profile Manager</a>
+</div>
+
+<form id="form_area" class="nonselectable">
+  <div id = "register_form">
+    <!-- <h1>Company Profile</h1><br> -->
+    <i class="fa fa-user fa-1x"></i>
+    <a>Employee Name: </a></br> <input id="username_field" onclick="this.select();" type="text" name="employee_name"
+                                  placeholder="enter your name"><br><br>
+    <i class="fa fa-suitcase fa-1x"></i>
+    <a>Project Name: </a><a id="ouput_message" class="info_output"></a></br> <input id="projectname_field" onclick="this.select();" type="text" name="project_name"
+                                  placeholder="enter the project name"><br><br>
+
+    <i class="fa fa-align-justify fa-1x"></i>
+    <a>Project Description: </a></br> <input id="projectSummary_field" onclick="this.select();" type="text" name="project_desc"
+                                    placeholder="describe the project"><br>
+
+    <br><br>
+    <i class="fa fa-upload fa-1x"></i>
+    <a>Upload Images:</a>
+    <table class="upload_img">
+      <tr>
+        <td>
+          <br>
+          <a>Idle Image: </a>
+        </td>
+        <td>
+          <br>
+          <a>Start Image: </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input id="idleImage" type="file" name="wait_img">
+        </td>
+        <td>
+          <input type="file" name="start_img">
+        </td>
+      </tr>
+    </table>
+
+    <br><br>
+    <i class="fa fa-comment fa-1x"></i>
+    <a>Greetings:</a>
+    <div class="section">
+      <a>Greeting: </a></br> <textarea id="startGreeting_field" onclick="this.select();" name="start_greeting">Hello, Human!...</textarea><br><br>
+      <a>Parting Phrase: </a></br> <textarea id="endGreeting_field" onclick="this.select();" name="end_greeting">Goodbye, Human!...</textarea><br>
+    </div>
+  </div>
+  <br><br>
+
+  <div class="header_category">
+    <i class="fa fa-eye fa-1x"></i>
+    <a>Display:</a><br>
+    <table id="toolSet">
+      <tr>
+        <td>
+          <a id="toolTip">Zoom-In</a>
+        </td>
+        <td>
+          <i id="zoomInButton" class="fa fa-search-plus zoomTool"></i>
+        </td>
+        <td>
+          <i id="zoomOutButton" class="fa fa-search-minus zoomTool"></i>
+        </td>
+        <td>
+          <i id="normalZoomButton" class="fa fa-refresh zoomTool"></i>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="canvas_container">
+    <div id="canvas">
+      <!-- <div class="buttons" style="top:0px; left:0px; background-color: #3399FF;">Button</div> -->
+    </div>
+  </div>
+
+  <i class="fa fa-picture-o fa-1x"></i>
+  <a>Background Image:</a>
+  <div id="upload_bg">
+    <input onchange="changeBgImage(this);" id="bg_img" type="file" name="bg_img">
+  </div>
+
+  <br><hr>
+  <div id="sticky_serivce_category" class="header_category">
+    <i class="fa fa-wrench"></i>
+    <a>Services </a>
+    <a id="totalFormHtml"></a>
+    <div class="options">
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <a class="enabled service_option nonselectable" id="add_service">Add Service</a>
+          </td>
+          <td>
+            <a class="enabled service_option nonselectable" id="remove_all_service">Remove All</a>
+          </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="service_form">
+      <!-- This is where all service forms go -->
+  </div>
+
+  <div id="service_counter">-Empty-</div>
+
+  <hr></br>
+
+  <div id="button_container">
+    <div id="submit_button" onclick='submitForm();'><i class="fa fa-paper-plane"></i><a>  Submit</a></div>
+  </div>
+
+</form>
+</body>
+</html>

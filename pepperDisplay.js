@@ -2,7 +2,7 @@ $(document).ready(function() {
   setBackground("g-angle_demopicture.jpg");
   $.ajax({
     url: "pepperDisplay.php",
-    data: "ProjectId=" + "d8b7c6ff-0921-25d8-4cdd-94d382ae5f83", // Use this when passing ProjectId variable is implemented
+    data: "ProjectId=" + "02ec9f1a-e277-5e44-0baf-d961fad932cc", // Use this when passing ProjectId variable is implemented
     type: "POST",
     dataType: 'json',
     success: function(data){

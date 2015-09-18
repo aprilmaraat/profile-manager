@@ -5,7 +5,7 @@ var currentZoom = 1.0;
 var currFontSize = 20;
 var initXYpos = 0;
 var canSubmit = 0;
-
+var index = 0;
 var ServiceIdArray = new Array(); //Declare Array for Services' Id's
 ServiceIdArray.push("1"); //Add index '1' from the auto-generated Service //Temporary place for code
 
@@ -20,13 +20,14 @@ var serviceArray = {
 // var xmlHttp = createXmlHttpsRequestObject();
 
 $(document).ready(function() {
-  var index = 1;
+  preLoadData();
+  // var index = 1;
   // serviceIDs.push(index);
   // var totalForm = 0;
 
   //Initalize
-  init(index);
-  index++;
+  // init(index);
+  // index++;
   setTotalValue(totalForm);
 
   //REMOVE ALL BUTTON
@@ -134,7 +135,7 @@ $(document).ready(function() {
       }
     );
 
-    document.getElementById('button_1').style.left = 100;
+    // document.getElementById('button_1').style.left = 100;
 
     // $("#submit_button").click(function(){
     //
@@ -147,6 +148,105 @@ $(document).ready(function() {
 });
 
 //=========FUNCTIONS=========
+
+// PRELOAD BEGINS +++++++++++
+function preLoadData(){
+  getProject();
+  getServices();
+}
+
+function getProject(){
+  $.ajax({
+    url: "get_project.php",
+    data: "ProjectId=" + "02ec9f1a-e277-5e44-0baf-d961fad932cc", // Use this when passing ProjectId variable is implemented
+    type: "POST",
+    dataType: 'json',
+    success: function(data){
+    setProjectInfo(data[0].empName, data[0].projName, data[0].projSummary, data[0].startGreeting, data[0].endGreeting);
+    // index++;
+        //createButtons(INDEX,X-POS,Y-POS,SERVICE-NAME);
+    }
+  });
+}
+
+function setProjectInfo(empName, projName, projSummary, startGreeting, endGreeting){
+  document.getElementById("username_field").value = empName;
+  document.getElementById("projectname_field").value = projName;
+  document.getElementById("projectSummary_field").value = projSummary;
+  document.getElementById("startGreeting_field").value = startGreeting;
+  document.getElementById("endGreeting_field").value = endGreeting;
+}
+
+function getServices(){
+  $.ajax({
+    url: "get_services.php",
+    data: "ProjectId=" + "02ec9f1a-e277-5e44-0baf-d961fad932cc", // Use this when passing ProjectId variable is implemented
+    type: "POST",
+    dataType: 'json',
+    success: function(data){
+      var serviceCount = data.length; //Number of services in the database
+      for(var ctr = 0; ctr < serviceCount; ctr++){
+        createButtons(index, data[ctr].x, data[ctr].y, data[ctr].name, data[ctr].displayFlag, data[ctr].description);
+        index++;
+        //createButtons(INDEX,X-POS,Y-POS,SERVICE-NAME);
+      }
+    }
+  });
+}
+
+function createButtons(index, yPos, xPos ,name, isDisplay, description){
+  var tempTotal = totalForm;
+  tempTotal += 1;
+  $(".service_form").prepend('    <div id="'+index+'" class="template">'+
+        '<i class="fa fa-star fa-1x"></i>'+
+        '<a>Service Name: </a></br> <input id="name_field_'+index+'" onchange="setName(this);" type="text" name="employee_name"'+
+                                      'value="'+name+'"placeholder="What service do you provide?"><br><br>'+
+        '<i class="fa fa-sort-desc fa-1x"></i>'+
+        '<a>Service Description: </a></br> <textarea id="service_description_'+index+'" onclick="this.select();" name="start_greeting">'+description+'</textarea><br><br>'+
+
+        '<table class="template_elem">'+
+          '<tr>'+
+            '<td>'+
+              '<a>Button Image</a>'+
+              '<input id="button_image_'+index+'" onchange="changeButtonImage(this);" type="file" name="start_img">'+
+            '</td>'+
+            '<td>'+
+              '<a>Table Image</a>'+
+              '<input type="file" name="start_img">'+
+            '</td>'+
+          '</tr>'+
+          '<tr>'+
+            '<td>'+
+              '<a>Button Position-X: </a>'+
+              '<input onchange="setPosX(this.id);" id="button_'+index+'_fieldX" onclick="this.select();" class="small_textfield" type="size" name="start_img" value="'+yPos+'" placeholder="'+initXYpos+'px">'+
+            '</td>'+
+            '<td>'+
+              '<a>Button Position-Y: </a>'+
+              '<input onchange="setPosY(this.id);" id="button_'+index+'_fieldY" onclick="this.select();" class="small_textfield" type="size" name="start_img" value="'+xPos+'" placeholder="'+initXYpos+'px">'+
+            '</td>'+
+            '<td>'+
+              // '<a>Display</a>'+
+            '<input id="check_'+index+'" onchange="checkBoxCheck(this.id)" type="checkbox" checked><label for="check_'+index+'" />'+
+              // '<div class="switch"><i class="fa fa-eye"></i></div>'+
+            '</td>'+
+          '</tr>'+
+        '</table>'+
+          '<i onClick="removeService();" class="fa fa-times"></i>'+
+      '</div>');
+  $("#canvas").append('<div id="button_'+index+'" class="buttons" style="top:'+xPos+'; left:'+yPos+';">'+name+'</div>');
+  // scrollToForm(index);
+  setDragButtons();
+  goToButtonParentForm();
+  updateButtonPos(index);
+  // serviceIDs.push(index);
+  totalForm++;
+  if(isDisplay == 0){
+    document.getElementById("button_"+index).style.display = 'none';
+  }
+}
+
+// PRELOAD END ++++++++++++++
+
 function init(index){
   // process();
   $(".service_form").append('    <div id="'+index+'" class="template">'+
